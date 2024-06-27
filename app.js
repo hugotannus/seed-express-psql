@@ -9,14 +9,14 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+// view engine setup
+// https://github.com/ericf/express-handlebars?tab=readme-ov-file#extnamehandlebars
 var { create } = require('express-handlebars');
 var hbs =  create({ extname: '.hbs' })
 
-// view engine setup
-// https://github.com/ericf/express-handlebars?tab=readme-ov-file#extnamehandlebars
-app.engine('.hbs', hbs.engine);
+app.engine('hbs', hbs.engine);
 app.set('views', './views');
-app.set('view engine', '.hbs');
+app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
 app.use(express.json());
