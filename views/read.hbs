@@ -3,63 +3,36 @@
 <table class="table">
     <thead class="table-light">
         <tr>
-            <th scope="col">Nº de Matrícula</th>
-            <th scope="col">Nome</th>
-            <th scope="col">Data de Nascimento</th>
-            <th scope="col">Endereço de E-mail</th>
+            <th scope="col">#</th>
+            {{#each alunos.heads}}
+                <th scope="col">{{this}}</th>
+            {{/each}}
             <th scope="col"></th>
             <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
+        {{#each alunos.content}}
         <tr>
-            <th scope="row">0244</th>
-            <td>Antônio Silva</td>
-            <td>01/07/1984</td>
-            <td>antonio.silva@example.com</td>
+            <td>{{@index}}</td>
+            <th scope="row">{{matricula}}</th>
+            <td>{{nome}}</td>
+            <td>{{data_nascimento}}</td>
+            <td>{{email}}</td>
+            
             <td>
-                <a class="btn btn-light rounded-pill px-3" href="/alunos/edit/1" role="button">
+                <a class="btn btn-light rounded-pill px-3" href="alunos/edit/{{matricula}}" role="button">
                     <i class="bi bi-pencil-square"></i>
                 </a>
             </td>
+
             <td>
                 <button class="btn btn-light rounded-pill px-3" type="button">
                     <i class="bi-trash"></i>
                 </button>
             </td>
         </tr>
-        <tr>
-            <th scope="row">1234</th>
-            <td>John Doe</td>
-            <td>01/04/2000</td>
-            <td>john.doe@example.com</td>
-            <td>
-                <a class="btn btn-light rounded-pill px-3" href="alunos/edit/2" role="button">
-                    <i class="bi bi-pencil-square"></i>
-                </a>
-            </td>
-            <td>
-                <button class="btn btn-light rounded-pill px-3" type="button">
-                    <i class="bi-trash"></i>
-                </button>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">1234</th>
-            <td>Mark Denver</td>
-            <td>23/07/1998</td>
-            <td>mark.denver@example.com</td>
-            <td>
-                <a class="btn btn-light rounded-pill px-3" href="alunos/edit/3" role="button">
-                    <i class="bi bi-pencil-square"></i>
-                </a>
-            </td>
-            <td>
-                <button class="btn btn-light rounded-pill px-3" type="button">
-                    <i class="bi-trash"></i>
-                </button>
-            </td>
-        </tr>
+        {{/each}}
     </tbody>
 </table>
 

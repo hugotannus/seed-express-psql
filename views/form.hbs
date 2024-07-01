@@ -9,20 +9,20 @@
 
 <form>
   <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Nº de Matrícula</label>
-    <input type="number" class="form-control">
+    <label class="form-label">{{labels.matricula}}</label>
+    <input type="number" class="form-control" value={{aluno.matricula}} disabled>
   </div>
   <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Nome completo <i class="bi bi-trash"></i></label>
-    <input type="text" class="form-control">
+    <label class="form-label">{{labels.nome}}</label>
+    <input type="text" class="form-control" value="{{aluno.nome}}">
   </div>
   <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Data de nascimento</label>
-    <input type="date" class="form-control">
+    <label class="form-label">{{labels.data_nascimento}}</label>
+    <input type="date" class="form-control" value="{{aluno.data_nascimento}}">
   </div>
   <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Endereço de Email</label>
-    <input type="email" class="form-control" placeholder="name@example.com">
+    <label class="form-label">{{labels.email}}</label>
+    <input type="email" class="form-control" value="{{aluno.email}}" placeholder="name@example.com">
   </div>
-  <button type="submit" class="btn btn-primary">Criar Aluno</button>
+  <button type="submit" class="btn btn-primary">{{buttonText}}</button>
 </form>
