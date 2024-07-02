@@ -14,18 +14,17 @@ router.get('/new', function (_req, res, next) {
 router.get('/:matricula', function (req, res, next) {
     const { matricula } = req.params;
     
-    const aluno = alunos.content.find(aluno => aluno.matricula == matricula);
+    const aluno = alunos.content[matricula];
 
-    res.render('read_one', { title: 'Detalhes do Aluno', buttonText: 'Salvar', ...aluno });
+    res.render('read_one', { title: 'Detalhes do Aluno', buttonText: 'Salvar', labels: alunos.heads, ...aluno });
 });
 
 router.get('/edit/:matricula', function (req, res, next) {
     const { matricula } = req.params;
     
-    const keys = Object.keys(alunos.heads);
-    const aluno = alunos.content.find(aluno => aluno.matricula == matricula);
+    const aluno = alunos.content[matricula];
 
-    res.render('form', { keys, aluno, labels: alunos.heads, title: 'Editar Aluno', buttonText: 'Salvar' });
+    res.render('form', { title: 'Editar Aluno', buttonText: 'Salvar', labels: alunos.heads, aluno });
 });
 
 module.exports = router;
