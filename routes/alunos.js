@@ -1,10 +1,12 @@
-var express = require('express');
-var router = express.Router();
-var alunos = require('../tests/mocks/alunos.json')
+const express = require('express');
+const router = express.Router();
+let alunos = require('../tests/mocks/alunos.json');
 
 /* GET users listing. */
 router.get('/', function (_req, res, next) {
-    res.render('read', { title: 'Alunos', alunos });
+    const data = { title: 'Alunos', alunos };
+    // res.render('read', data);
+    res.render('list', data);
 });
 
 router.get('/new', function (_req, res, next) {
