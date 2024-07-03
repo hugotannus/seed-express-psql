@@ -1,0 +1,28 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/alunos">Alunos</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{title}}</li>
+  </ol>
+</nav>
+
+<h1>{{title}}</h1>
+
+<form>
+  <div class="mb-3">
+    <label class="form-label">{{labels.matricula}}</label>
+    <input type="number" class="form-control" value={{aluno.matricula}} disabled>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">{{labels.nome}}</label>
+    <input type="text" class="form-control" value="{{aluno.nome}}">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">{{labels.data_nascimento}}</label>
+    <input type="date" class="form-control" value="{{aluno.data_nascimento}}">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">{{labels.email}}</label>
+    <input type="email" class="form-control" value="{{aluno.email}}" placeholder="name@example.com">
+  </div>
+  <button type="submit" class="btn btn-primary">{{buttonText}}</button>
+</form>
