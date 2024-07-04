@@ -11,7 +11,19 @@ router.get('/', function (_req, res, next) {
 router.get('/new', function (_req, res, next) {
     const { heads: labels } = alunos;
 
-    res.render('form_bkp', { title: 'Novo Aluno',  buttonText: 'Adicionar Aluno', labels });
+    res.render('form', { title: 'Novo Aluno',  buttonText: 'Adicionar Aluno', labels });
+});
+
+router.post('/create', function(req, res, next){
+    const novoAluno = req.body;
+    const matricula = novoAluno.matricula;
+
+    alunos.content[matricula] = {
+        ...novoAluno,
+        matricula: Number(matricula)
+    };
+
+    res.redirect('/alunos');
 });
 
 router.get('/:matricula', function (req, res, next) {
