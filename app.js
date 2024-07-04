@@ -8,10 +8,15 @@ var bodyParser = require('body-parser');
 var indexRouter = require('./routes/index');
 var alunosRouter = require('./routes/alunos');
 var usersRouter = require('./routes/users');
+var httpMethodOverrider = require('./middlewares/http-method-overrider');
 
 var app = express();
 
+// https://github.com/expressjs/method-override?tab=readme-ov-file#custom-logic
 app.use(bodyParser.urlencoded());
+
+// Custom Middlewares
+app.use(httpMethodOverrider);  // TODO: Criar testes para este middleware
 
 // view engine setup
 // https://github.com/ericf/express-handlebars?tab=readme-ov-file#extnamehandlebars
