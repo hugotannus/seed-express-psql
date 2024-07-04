@@ -7,22 +7,22 @@
 
 <h1>{{title}}</h1>
 
-<form>
+<form action="/alunos" method="POST">
   <div class="mb-3">
     <label class="form-label">{{labels.matricula}}</label>
-    <input type="number" class="form-control" value={{aluno.matricula}} disabled>
+    <input type="number" name="matricula" class="form-control" value={{aluno.matricula}} disabled>
   </div>
   <div class="mb-3">
     <label class="form-label">{{labels.nome}}</label>
-    <input type="text" class="form-control" value="{{aluno.nome}}">
+    <input type="text" name="nome" class="form-control" value="{{aluno.nome}}">
   </div>
   <div class="mb-3">
     <label class="form-label">{{labels.data_nascimento}}</label>
-    <input type="date" class="form-control" value="{{aluno.data_nascimento}}">
+    <input type="date" name="data_nascimento" class="form-control" value="{{aluno.data_nascimento}}">
   </div>
   <div class="mb-3">
     <label class="form-label">{{labels.email}}</label>
-    <input type="email" class="form-control" value="{{aluno.email}}" placeholder="name@example.com">
+    <input type="email" name="email" class="form-control" value="{{aluno.email}}" placeholder="name@example.com">
   </div>
   <button type="submit" class="btn btn-primary">{{buttonText}}</button>
 </form>

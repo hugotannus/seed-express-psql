@@ -9,7 +9,9 @@ router.get('/', function (_req, res, next) {
 });
 
 router.get('/new', function (_req, res, next) {
-    res.render('form', { title: 'Novo Aluno',  buttonText: 'Adicionar Aluno' });
+    const { heads: labels } = alunos;
+
+    res.render('form_bkp', { title: 'Novo Aluno',  buttonText: 'Adicionar Aluno', labels });
 });
 
 router.get('/:matricula', function (req, res, next) {
@@ -17,7 +19,7 @@ router.get('/:matricula', function (req, res, next) {
  
     const aluno = alunos.content[matricula];
 
-    res.render('card', { aluno, title: 'Detalhes do Aluno'});
+    res.render('read_one', { aluno, title: 'Detalhes do Aluno'});
 });
 
 router.get('/edit/:matricula', function (req, res, next) {
@@ -26,6 +28,15 @@ router.get('/edit/:matricula', function (req, res, next) {
     const aluno = alunos.content[matricula];
 
     res.render('form', { aluno, title: 'Editar Aluno', buttonText: 'Salvar Alterações' });
+});
+
+router.post('/', function (req, res, next) {
+    const aluno = req.body;
+    const { matricula } = aluno;
+
+    alunos.content[matricula] = { ...aluno, matricula: Number(matricula) };
+
+    res.redirect(303, '/alunos');
 });
 
 module.exports = router;
