@@ -3,12 +3,15 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var bodyParser = require('body-parser');
 
 var indexRouter = require('./routes/index');
 var alunosRouter = require('./routes/alunos');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+app.use(bodyParser.urlencoded());
 
 // view engine setup
 // https://github.com/ericf/express-handlebars?tab=readme-ov-file#extnamehandlebars
