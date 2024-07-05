@@ -7,6 +7,8 @@ function overrideHttpMethod(req, _res, next) {
     if (typeof body === 'object' && body._method) {
         switch(body._method.toUpperCase()) {
             case 'PUT':
+            case 'POST':
+            case 'PATCH':
             case 'DELETE':
                 req.method = body._method;
                 break;
