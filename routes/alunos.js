@@ -14,18 +14,6 @@ router.get('/new', function (_req, res, next) {
     res.render('form', { title: 'Novo Aluno',  buttonText: 'Adicionar Aluno', labels });
 });
 
-router.post('/create', function(req, res, next){
-    const novoAluno = req.body;
-    const matricula = novoAluno.matricula;
-
-    alunos.content[matricula] = {
-        ...novoAluno,
-        matricula: Number(matricula)
-    };
-
-    res.redirect('/alunos');
-});
-
 router.get('/:matricula', function (req, res, next) {
     const { matricula } = req.params;
  
@@ -43,12 +31,33 @@ router.get('/edit/:matricula', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
-    const aluno = req.body;
-    const { matricula } = aluno;
+    const { body, method } = req;
 
-    alunos.content[matricula] = { ...aluno, matricula: Number(matricula) };
+    res.send({ body, method });
+});
 
-    res.redirect(303, '/alunos');
+router.post('/create', function(req, res, next){
+    const novoAluno = req.body;
+    const matricula = novoAluno.matricula;
+
+    alunos.content[matricula] = {
+        ...novoAluno,
+        matricula: Number(matricula)
+    };
+
+    res.redirect('/alunos');
+});
+
+router.put('/', function (req, res, next) {
+    const { body, method } = req;
+
+    res.send({ body, method, msg: 'Alteração de usuário' });
+});
+
+router.delete('/', function (req, res, next) {
+    const { body, method } = req;
+
+    res.send({ body, method, msg: 'Vai remover aluno' });
 });
 
 module.exports = router;
