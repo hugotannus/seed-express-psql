@@ -8,3 +8,11 @@
 </ul>
 
 <a href="/alunos/edit/{{aluno.matricula}}">Editar</a>
+
+<form action="/alunos/{{aluno.matricula}}" method="POST">
+    <input type="hidden" name="_method" value="DELETE">
+    <button type="submit" id="submit" class="btn btn-danger">
+        Remover
+        <i class="bi bi-trash"></i>
+    </button>
+</form>

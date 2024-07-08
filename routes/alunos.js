@@ -9,9 +9,14 @@ router.get('/', function (_req, res, next) {
 });
 
 router.get('/new', function (_req, res, next) {
-    const { heads: labels } = alunos;
+    const data = {
+        metodo: "POST",
+        parametro: "create",
+        title: 'Novo Aluno',
+        buttonText: 'Adicionar Aluno'
+    }
 
-    res.render('form', { title: 'Novo Aluno',  buttonText: 'Adicionar Aluno', labels });
+    res.render('form', data);
 });
 
 router.get('/:matricula', function (req, res, next) {
@@ -19,15 +24,21 @@ router.get('/:matricula', function (req, res, next) {
  
     const aluno = alunos.content[matricula];
 
-    res.render('read_one', { aluno, title: 'Detalhes do Aluno'});
+    res.render('card', { aluno, title: 'Detalhes do Aluno'});
 });
 
 router.get('/edit/:matricula', function (req, res, next) {
     const { matricula } = req.params;
-    
     const aluno = alunos.content[matricula];
+    const data = {
+        aluno,
+        metodo: "PUT",
+        parametro: matricula,
+        title: 'Editar Aluno',
+        buttonText: 'Salvar Alterações'
+    }
 
-    res.render('form', { aluno, title: 'Editar Aluno', buttonText: 'Salvar Alterações' });
+    res.render('form', data);
 });
 
 router.post('/', function (req, res, next) {
@@ -48,16 +59,26 @@ router.post('/create', function(req, res, next){
     res.redirect('/alunos');
 });
 
-router.put('/', function (req, res, next) {
-    const { body, method } = req;
+router.put('/:matricula/', function (req, res, next) {
+    // const { body, method } = req;
+    const { matricula } = req.params;
+    const novoAluno = req.body;
 
-    res.send({ body, method, msg: 'Alteração de usuário' });
+    alunos.content[matricula] = {
+        ...novoAluno,
+        matricula: Number(matricula)
+    };
+
+    // res.send({ body, method, msg: 'Alteração de usuário' });
+    res.redirect('/alunos');
 });
 
-router.delete('/', function (req, res, next) {
-    const { body, method } = req;
+router.delete('/:matricula', function (req, res, next) {
+    const { matricula } = req.params;
 
-    res.send({ body, method, msg: 'Vai remover aluno' });
+    delete alunos.content[matricula];
+
+    res.redirect('/alunos');
 });
 
 module.exports = router;
