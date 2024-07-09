@@ -31,25 +31,29 @@ router.get('/:matricula', async function (req, res, next) {
 
     try {
         const { data: aluno } = await localApi.get('/alunos/' + matricula);
-        console.log(aluno)
         res.status(200).render('card', { aluno, title: 'Detalhes do Aluno'});
     } catch (error) {
         res.json({msg: error.message})
     }
 });
 
-router.get('/edit/:matricula', function (req, res, next) {
+router.get('/edit/:matricula', async function (req, res, next) {
     const { matricula } = req.params;
-    const aluno = alunos.content[matricula];
-    const data = {
-        aluno,
-        metodo: "PUT",
-        parametro: matricula,
-        title: 'Editar Aluno',
-        buttonText: 'Salvar Alterações'
-    }
+    
+    try {
+        const { data: aluno } = await localApi.get('/alunos/' + matricula);
+        const data = {
+            aluno,
+            metodo: "PUT",
+            parametro: matricula,
+            title: 'Editar Aluno',
+            buttonText: 'Salvar Alterações'
+        }
 
-    res.render('form', data);
+        res.status(200).render('form', data);
+    } catch (error) {
+        res.json({msg: error.message})
+    }
 });
 
 router.post('/create', function(req, res, next){
