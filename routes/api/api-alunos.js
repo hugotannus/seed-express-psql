@@ -15,7 +15,7 @@ router.get('/:matricula', function (req, res, next) {
 
     try{
         const aluno = alunos.content[matricula];
-        res.status(200).json({ aluno });
+        res.status(200).json(aluno);
     } catch (error) {
         res.status(400).json({ msg: error.message });
     }

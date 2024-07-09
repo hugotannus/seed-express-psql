@@ -13,12 +13,6 @@ router.get('/', async function (_req, res, next) {
     } catch (error) {
         res.json({msg: error.message})
     }
-
-});
-
-router.get('/', function (_req, res, next) {
-    const data = { title: 'Alunos', alunos };
-    res.render('list', data);
 });
 
 router.get('/new', function (_req, res, next) {
@@ -32,12 +26,16 @@ router.get('/new', function (_req, res, next) {
     res.render('form', data);
 });
 
-router.get('/:matricula', function (req, res, next) {
+router.get('/:matricula', async function (req, res, next) {
     const { matricula } = req.params;
- 
-    const aluno = alunos.content[matricula];
 
-    res.render('card', { aluno, title: 'Detalhes do Aluno'});
+    try {
+        const { data: aluno } = await localApi.get('/alunos/' + matricula);
+        console.log(aluno)
+        res.status(200).render('card', { aluno, title: 'Detalhes do Aluno'});
+    } catch (error) {
+        res.json({msg: error.message})
+    }
 });
 
 router.get('/edit/:matricula', function (req, res, next) {
