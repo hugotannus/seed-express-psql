@@ -39,25 +39,32 @@ router.post('/', function(req, res, next){
 });
 
 router.put('/:matricula', function (req, res, next) {
-    // const { body, method } = req;
+    const novoAluno = req.body
     const { matricula } = req.params;
-    const novoAluno = req.body;
+    const { nome, data_nascimento, email } = novoAluno;
+    
+    if(!matricula || !nome || !data_nascimento || !email) {
+        res.status(400).json({msg: 'Por favor, verifique se todos os campos foram preenchidos corretamente'});
+        return;
+    }
 
-    alunos.content[matricula] = {
-        ...novoAluno,
-        matricula: Number(matricula)
-    };
-
-    // res.send({ body, method, msg: 'Alteração de usuário' });
-    res.redirect('/alunos');
+    try{
+        alunos.content[matricula] = { ...novoAluno, matricula: Number(matricula) };
+        res.status(201).json();
+    } catch (error) {
+        res.status(400).json({ msg: error.message });
+    }
 });
 
 router.delete('/:matricula', function (req, res, next) {
     const { matricula } = req.params;
 
-    delete alunos.content[matricula];
-
-    res.redirect('/alunos');
+    try {
+        delete alunos.content[matricula];
+        res.status(201).json();
+    } catch (error) {
+        res.status(400).json({ msg: error.message });
+    }
 });
 
 module.exports = router;
