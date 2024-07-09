@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var alunosRouter = require('./routes/alunos');
@@ -14,6 +15,9 @@ var apiAlunosRouter = require('./routes/api/api-alunos');
 var httpMethodOverrider = require('./middlewares/http-method-overrider');
 
 var app = express();
+
+// Use CORS middleware
+app.use(cors());
 
 // https://github.com/expressjs/method-override?tab=readme-ov-file#custom-logic
 app.use(bodyParser.urlencoded());
