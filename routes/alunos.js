@@ -56,16 +56,16 @@ router.get('/edit/:matricula', async function (req, res, next) {
     }
 });
 
-router.post('/create', function(req, res, next){
+router.post('/create', async function(req, res, next){
     const novoAluno = req.body;
-    const matricula = novoAluno.matricula;
 
-    alunos.content[matricula] = {
-        ...novoAluno,
-        matricula: Number(matricula)
-    };
-
-    res.redirect('/alunos');
+    try {
+        const response = await localApi.post("alunos", novoAluno);
+        
+        if(response.status == 201) res.redirect('/alunos');
+    } catch (error) {
+        console.error(error.message)
+    }
 });
 
 router.put('/:matricula', function (req, res, next) {
