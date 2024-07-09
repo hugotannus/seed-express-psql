@@ -1,8 +1,10 @@
-
 const axios = require('axios');
 
-const http = axios.create();
-// const http = axios.create({ baseUrl: 'http://localhost:3000/api/v1/' });
+const API_PATH = 'http://localhost:3000/api/v1';
 
-module.exports = http;
+const localApi = require('axios').create({
+    baseURL: API_PATH
+});
+
+module.exports = { localApi };
 
