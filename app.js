@@ -27,8 +27,15 @@ app.use(httpMethodOverrider);  // TODO: Criar testes para este middleware
 
 // view engine setup
 // https://github.com/ericf/express-handlebars?tab=readme-ov-file#extnamehandlebars
-var { create } = require('express-handlebars');
-var hbs =  create({ extname: '.hbs' })
+var Handlebars = require('handlebars')
+var expressHandlebars = require('express-handlebars');
+// ßhttps://handlebarsjs.com/api-reference/runtime-options.html#options-to-control-prototype-access
+// https://www.npmjs.com/package/@handlebars/allow-prototype-access
+var {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
+var hbs =  expressHandlebars.create({
+  extname: '.hbs',
+  handlebars: allowInsecurePrototypeAccess(Handlebars)
+});
 
 app.engine('hbs', hbs.engine);
 app.set('views', './views');
