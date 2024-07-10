@@ -2,17 +2,15 @@ const { localApi } = require('../config/config_axios');
 const express = require('express');
 const router = express.Router();
 
-let alunos = require('../tests/mocks/alunos.json');
+const ALUNOS = require('../tests/mocks/alunos.json');
 
 router.get('/', async function (_req, res, next) {
     try {
-        const response = await localApi.get('/api/v1/alunos');
-        console.log(response)
-        const alunos = response.data;
-        // const { data: alunos } = await localApi.get('/api/v1/alunos');
-        const data = { title: 'Alunos', alunos };
+        let response = await localApi.get('/api/v1/alunos');
+        let alunos = response.data;
+        let viewData = { title: 'Alunos', alunos };
 
-        res.status(200).render('list', data);
+        res.status(200).render('list', viewData);
     } catch (error) {
         res.json({msg: error.message})
     }
