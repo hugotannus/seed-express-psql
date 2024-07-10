@@ -29,17 +29,17 @@ router.get('/:matricula', async function (req, res, next) {
     }
 });
 
-router.post('/', async function(req, res, next) {
-    const query = `INSERT
-    INTO alunos (matricula, nome, email, data_nascimento)
+router.post('/', async function (req, res, next) {
+    const query = `
+    INSERT INTO alunos (matricula, nome, email, data_nascimento)
     VALUES ($1, $2, $3, $4)`;
 
     let { matricula, nome, email, data_nascimento } = req.body;
 
-    const values = [ matricula, nome, email, data_nascimento ];
+    const values = [matricula, nome, email, data_nascimento];
 
     try {
-        const data = await db.any(query, values);
+        const data = await db.none(query, values);
         console.log(data);
         res.status(201).json(data);
     } catch (error) {
@@ -47,18 +47,23 @@ router.post('/', async function(req, res, next) {
     }
 });
 
-router.put('/:matricula', function (req, res, next) {
-    const novoAluno = req.body;
-    const matricula = Number(req.params.matricula);
+router.put('/:matricula', async function (req, res, next) {
+    const query = `
+    UPDATE alunos
+    SET nome=$2, email=$3, data_nascimento=$4
+    WHERE matricula=$1`;
 
-    alunos.content[matricula] = { ...novoAluno, matricula };
+    let { matricula, nome, email, data_nascimento } = req.body;
 
-    const response = {
-        msg: "Aluno atualizado com sucesso!",
-        aluno: alunos.content[matricula]
+    const values = [matricula, nome, email, data_nascimento];
+
+    try {
+        const data = await db.any(query, values);
+        console.log(data);
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(400).json({ msg: error.message });
     }
-
-    res.status(200).json(response);
 });
 
 router.delete('/:matricula', function (req, res, next) {
