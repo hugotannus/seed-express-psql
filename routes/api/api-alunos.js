@@ -58,7 +58,7 @@ router.put('/:matricula', async function (req, res, next) {
     const values = [matricula, nome, email, data_nascimento];
 
     try {
-        const data = await db.any(query, values);
+        const data = await db.none(query, values);
         console.log(data);
         res.status(200).json(data);
     } catch (error) {
@@ -66,17 +66,17 @@ router.put('/:matricula', async function (req, res, next) {
     }
 });
 
-router.delete('/:matricula', function (req, res, next) {
+router.delete('/:matricula', async function (req, res, next) {
     const matricula = req.params.matricula;
+    const query = 'DELETE FROM alunos WHERE matricula = $1';
 
-    delete alunos.content[matricula];
-
-    const response = {
-        msg: "Aluno removido!",
-        matricula
+    try {
+        const data = await db.none(query, matricula);
+        console.log(data)
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(400).json({ msg: error.message });
     }
-
-    res.status(200).json(response);
 });
 
 module.exports = router;
