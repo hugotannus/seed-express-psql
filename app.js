@@ -16,6 +16,9 @@ var httpMethodOverrider = require('./middlewares/http-method-overrider');
 
 var app = express();
 
+require('dotenv').config();
+// console.log(process.env)
+
 // Use CORS middleware
 app.use(cors());
 
