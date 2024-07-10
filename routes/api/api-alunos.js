@@ -1,8 +1,5 @@
-const e = require('express');
 const db = require('../../config/config_database');
 const router = require('express').Router();
-
-let ALUNOS = require('../../tests/mocks/alunos.json');
 
 // http://localhost:3000/api/v1/alunos
 router.get('/', async function (_req, res, next) {
