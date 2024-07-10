@@ -1,6 +1,9 @@
 const { localApi } = require('../config/config_axios');
 const express = require('express');
 const router = express.Router();
+const path = require('path');
+
+const API_PATH = '/api/v1';
 
 const ALUNOS = require('../tests/mocks/alunos.json');
 
@@ -17,70 +20,79 @@ router.get('/', async function (_req, res, next) {
 });
 
 router.get('/new', function (_req, res, next) {
-    const data = {
+    let viewData = {
         metodo: "POST",
         parametro: "create",
         title: 'Novo Aluno',
         buttonText: 'Adicionar Aluno'
     }
 
-    res.render('form', data);
+    res.render('form', viewData);
 });
 
 router.get('/:matricula', async function (req, res, next) {
-    const { matricula } = req.params;
+    const matricula = req.params.matricula;
+    
+    let apiUrlPath = path.join('alunos', matricula);
 
     try {
-        const { data: aluno } = await localApi.get('/alunos/' + matricula);
-        res.status(200).render('card', { aluno, title: 'Detalhes do Aluno'});
+        let response = await localApi.get(apiUrlPath);
+        let aluno = response.data;
+        let viewData = { aluno, title: 'Detalhes do Aluno'}
+
+        res.status(200).render('card', viewData);
     } catch (error) {
         res.json({msg: error.message})
     }
 });
 
 router.get('/edit/:matricula', async function (req, res, next) {
-    const { matricula } = req.params;
+    let matricula = req.params.matricula;
+    let apiUrlPath = path.join('alunos', matricula);
+    
+    let viewData = {
+        metodo: "PUT",
+        parametro: matricula,
+        title: 'Editar Aluno',
+        buttonText: 'Salvar Alterações'
+    }
     
     try {
-        const { data: aluno } = await localApi.get('/alunos/' + matricula);
-        const data = {
-            aluno,
-            metodo: "PUT",
-            parametro: matricula,
-            title: 'Editar Aluno',
-            buttonText: 'Salvar Alterações'
-        }
-
-        res.status(200).render('form', data);
+        let response = await localApi.get(apiUrlPath);
+        let aluno = response.data;
+        
+        viewData.aluno = aluno;
+        
+        res.status(200).render('form', viewData);
     } catch (error) {
         res.json({msg: error.message})
     }
 });
 
 router.post('/create', async function(req, res, next){
-    const novoAluno = req.body;
+    let novoAluno = req.body;
 
     try {
         const response = await localApi.post("alunos", novoAluno);
-        
         if(response.status == 201) res.redirect('/alunos');
     } catch (error) {
         console.error(error.message)
     }
 });
 
-router.put('/:matricula', function (req, res, next) {
+router.put('/:matricula', async function (req, res, next) {
     // const { body, method } = req;
-    const { matricula } = req.params;
-    const novoAluno = req.body;
+    let matricula = req.params.matricula;
+    let apiUrlPath = path.join('alunos', matricula);
+    
+    const data = req.body;
 
-    alunos.content[matricula] = {
-        ...novoAluno,
-        matricula: Number(matricula)
-    };
-
-    // res.send({ body, method, msg: 'Alteração de usuário' });
-    res.redirect('/alunos');
+    try {
+        const response = await localApi.put(apiUrlPath, data);
+        if(response.status == 201) res.redirect('/alunos');
+    } catch (error) {
+        console.error(error.message)
+    }
 });
 
 router.delete('/:matricula', function (req, res, next) {
