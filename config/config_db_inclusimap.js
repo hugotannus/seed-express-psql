@@ -1,6 +1,6 @@
 const pgp = require('pg-promise')(/* options */)
 
-const BASE = 'exemplo_db';
+const BASE = 'inclusimap';
 const HOST = 'localhost';
 const USER = 'postgres';
 const PSWD = 'postgres';

@@ -1,0 +1,1 @@
+const db = require('../../config/config_database_projeto');

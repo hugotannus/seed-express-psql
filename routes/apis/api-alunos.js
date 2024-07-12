@@ -13,8 +13,10 @@ router.get('/', async function (_req, res, next) {
     }
 });
 
-router.get('/:matricula', async function (req, res, next) {
-    const matricula = req.params.matricula;
+router.get('/:fk_aluno/:fk_curso', async function (req, res, next) {
+    // const matricula = req.params.matricula;
+    const id_aluno = req.params.fk_aluno;
+    const id_curso = req.params.fk_curso;
     
     const query = `
         SELECT *
