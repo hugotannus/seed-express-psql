@@ -7,10 +7,10 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 
 var indexRouter = require('./routes/index');
-var alunosRouter = require('./routes/controllers/alunos');
-var usersRouter = require('./routes/users');
+var alunosRouter = require('./routes/controllers/alunos-controller');
+var usersRouter = require('./routes/controllers/users-controller');
 
-var apiAlunosRouter = require('./routes/apis/api-alunos');
+var apiAlunosRouter = require('./routes/apis/alunos-api');
 
 var httpMethodOverrider = require('./middlewares/http-method-overrider');
 
