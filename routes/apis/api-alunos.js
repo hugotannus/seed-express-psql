@@ -22,8 +22,10 @@ router.get('/:matricula', async function (req, res, next) {
         WHERE matricula = $1
     `;
 
+    const args = [matricula]
+
     try {
-        const data = await db.one(query, [matricula]);
+        const data = await db.one(query, args);
         res.status(200).json(data);
     } catch (error) {
         res.status(400).json({ msg: error.message });
@@ -45,7 +47,7 @@ router.post('/', async function (req, res, next) {
     const values = [matricula, nome, email, data_nascimento];
 
     try {
-        const data = await db.any(query, values);
+        const data = await db.none(query, values);
         res.status(201).json(data);
     } catch (error) {
         res.status(400).json({ msg: error.message });
@@ -53,14 +55,15 @@ router.post('/', async function (req, res, next) {
 });
 
 router.put('/:matricula', async function (req, res, next) {
+    const matricula = req.params.matricula;
+
     const nome = req.body.nome;
     const email = req.body.email;
-    const matricula = req.body.matricula;
     const data_nascimento = req.body.data_nascimento;
 
     const query = `
         UPDATE alunos
-        SET nome=$2, email=$3, data_nascimento=$4,
+        SET nome=$2, email=$3, data_nascimento=$4
         WHERE matricula=$1
     `;
 
@@ -70,7 +73,7 @@ router.put('/:matricula', async function (req, res, next) {
         const data = await db.none(query, values);
         res.status(200).json(data);
     } catch (error) {
-        res.status(400).json({ msg: error.message });
+        res.status(400).json(error);
     }
 });
 
@@ -81,7 +84,9 @@ router.delete('/:matricula', async function (req, res, next) {
 
     try {
         const data = await db.none(query, matricula);
-        res.status(200).json(data);
+        const msg = "Aluno removido com sucesso!"
+        
+        res.status(200).json({msg, data});
     } catch (error) {
         res.status(400).json({ msg: error.message });
     }
